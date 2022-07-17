@@ -1,85 +1,98 @@
-import React from "react";
-
+import React, { useState } from "react";
+import axios from "axios";
 import "./App.css";
 import "./Weather.css";
 
 export default function Weather() {
-  let weatherData = {
-    city: "San Francisco",
-    temperature: 18,
-    day: "Friday",
-    time: "14:56",
-    description: "Clouds",
-    imgUrl: "http://openweathermap.org/img/wn/03d@2x.png",
-    humidity: 66,
-    wind: 7,
-  };
+  const [weatherData, setWeatherData] = useState({ loaded: false });
+  function handleResponse(response) {
+    setWeatherData({
+      loaded: true,
+      city: response.data.name,
+      temperature: response.data.main.temp,
+      description: response.data.weather[0].description,
+      wind: response.data.wind.speed,
+      humidity: response.data.main.humidity,
+      icon: `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
+      day: "Sunday",
+      time: "14:00",
+    });
+  }
 
-  return (
-    <div className="Weather">
-      <div className="container">
-        <div className="wrapper">
-          <div>
-            <form className="search-form">
-              <div className="row">
-                <div className="col-6">
-                  <input
-                    className="form-control searching"
-                    type="search"
-                    placeholder="Search for a city..."
-                    autoComplete="off"
-                    autoFocus="on"
-                  />
-                </div>
-                <div className="col-3">
-                  <input
-                    type="submit"
-                    value="Search"
-                    className="form-control btn btn-primary shadow-sm w-100"
-                  />
-                </div>
-                <div className="col-3">
-                  <button className="currently-btn btn btn-success w-100">
-                    Currently
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-          <div className="Overview">
-            <div className="city">
-              <h1>{weatherData.city}</h1>
-            </div>
+  if (weatherData.loaded) {
+    return (
+      <div className="Weather">
+        <div className="container">
+          <div className="wrapper">
             <div>
-              Last updated: <span className="date">{weatherData.day} </span>
-              <span className="time">{weatherData.time}</span>
+              <form className="search-form">
+                <div className="row">
+                  <div className="col-6">
+                    <input
+                      className="form-control searching"
+                      type="search"
+                      placeholder="Search for a city..."
+                      autoComplete="off"
+                      autoFocus="on"
+                    />
+                  </div>
+                  <div className="col-3">
+                    <input
+                      type="submit"
+                      value="Search"
+                      className="form-control btn btn-primary shadow-sm w-100"
+                    />
+                  </div>
+                  <div className="col-3">
+                    <button className="currently-btn btn btn-success w-100">
+                      Currently
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
-            <div>{weatherData.description}</div>
-            <h2 className="weather-temperature">
-              <img
-                src={weatherData.imgUrl}
-                className="icon"
-                alt={weatherData.description}
-              />
-              <span>{weatherData.temperature}</span>
-              <span className="unit">
-                <a href="/" className="active">
-                  °C
-                </a>
-                |<a href="/">°F</a>
-              </span>
-            </h2>
-            <ul className="metrics">
-              <li>
-                Wind: <span>{weatherData.wind}</span> m/s
-              </li>
-              <li>
-                Humidity: <span>{weatherData.humidity}</span>%
-              </li>
-            </ul>
+            <div className="Overview">
+              <div className="city">
+                <h1>{weatherData.city}</h1>
+              </div>
+              <div>
+                Last updated: <span className="date">{weatherData.day} </span>
+                <span className="time">{weatherData.time}</span>
+              </div>
+              <div className="text-capitalize">{weatherData.description}</div>
+              <h2 className="weather-temperature">
+                <img
+                  src={weatherData.icon}
+                  className="icon"
+                  alt={weatherData.description}
+                />
+                <span>{Math.round(weatherData.temperature)}</span>
+                <span className="unit">
+                  <a href="/" className="active">
+                    °C
+                  </a>
+                  |<a href="/">°F</a>
+                </span>
+              </h2>
+              <ul className="metrics">
+                <li>
+                  Wind: <span>{weatherData.wind}</span> m/s
+                </li>
+                <li>
+                  Humidity: <span>{weatherData.humidity}</span>%
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    const apiKey = "00939d96c9ed68ecdd1c51c91405f4e5";
+    let city = "San Francisco";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+    axios.get(apiUrl).then(handleResponse);
+
+    return "Loading...";
+  }
 }
