@@ -5,7 +5,7 @@ import Weather from "./Weather";
 function App() {
   return (
     <div>
-      <Weather />
+      <Weather defaultCity="San Francisco" />
       <p className="credentials">
         <a
           href="https://github.com/sydney257/weather-app-react"
