@@ -15,7 +15,11 @@ function App() {
           Open-sourced code
         </a>{" "}
         by Sydney Mercado, hosted on{" "}
-        <a href="https://netlify.com" target="_blank" rel="noreferrer">
+        <a
+          href="https://sparkling-semolina-bf1264.netlify.app/"
+          target="_blank"
+          rel="noreferrer"
+        >
           Netlify
         </a>
       </p>
