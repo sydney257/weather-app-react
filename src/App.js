@@ -14,7 +14,10 @@ function App() {
         >
           Open-sourced code
         </a>{" "}
-        by Sydney Mercado from <a href="https://shecodes.io">SheCodes</a>
+        by Sydney Mercado, hosted on{" "}
+        <a href="https://netlify.com" target="_blank" rel="noreferrer">
+          Netlify
+        </a>
       </p>
     </div>
   );

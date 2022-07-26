@@ -16,18 +16,24 @@ export default function WeatherData(props) {
         </span>
       </div>
       <div className="text-capitalize">{props.data.description}</div>
-      <h2 className="weather-temperature">
-        <WeatherIcon code={props.data.icon} size={52} />
-        <WeatherTemperature celsius={props.data.temperature} />
-      </h2>
-      <ul className="metrics">
-        <li>
-          Wind: <span>{Math.round(props.data.wind)}</span> m/s
-        </li>
-        <li>
-          Humidity: <span>{props.data.humidity}</span>%
-        </li>
-      </ul>
+      <div className="row">
+        <div className="col-6">
+          <h2 className="weather-temperature">
+            <WeatherIcon code={props.data.icon} size={50} />
+            <WeatherTemperature fahrenheit={props.data.temperature} />
+          </h2>
+        </div>
+        <div className="col-6">
+          <ul className="metrics">
+            <li>
+              Wind: <span>{Math.round(props.data.wind)}</span> mph
+            </li>
+            <li>
+              Humidity: <span>{props.data.humidity}</span>%
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   );
 }

@@ -24,7 +24,7 @@ export default function Weather(props) {
 
   function search() {
     const apiKey = "00939d96c9ed68ecdd1c51c91405f4e5";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
     axios.get(apiUrl).then(handleResponse);
   }
 
@@ -44,7 +44,7 @@ export default function Weather(props) {
           <div className="wrapper">
             <form className="search-form" onSubmit={handleSubmit}>
               <div className="row">
-                <div className="col-6">
+                <div className="col-9">
                   <input
                     className="form-control searching"
                     type="search"
